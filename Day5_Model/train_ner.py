@@ -9,6 +9,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import warnings
 warnings.filterwarnings('ignore')
+from seqeval.metrics import precision_score, recall_score, f1_score, classification_report
 
 # Load and parse the data
 print("Loading data...")
@@ -153,25 +154,34 @@ def compute_metrics(p):
     predictions, labels = p
     predictions = np.argmax(predictions, axis=2)
 
-    # Remove -100 labels
     true_predictions = []
     true_labels = []
+
     for pred, label in zip(predictions, labels):
         temp_pred = []
         temp_label = []
-        for p, l in zip(pred, label):
-            if l != -100:
-                temp_pred.append(id2label[p])
-                temp_label.append(id2label[l])
+
+        for p_, l_ in zip(pred, label):
+            if l_ != -100:
+                temp_pred.append(id2label[p_])
+                temp_label.append(id2label[l_])
+
         if temp_pred:
             true_predictions.append(temp_pred)
             true_labels.append(temp_label)
 
-    # Use seqeval for evaluation
-    from seqeval.metrics import classification_report
-    report = classification_report(true_labels, true_predictions, digits=4)
-    print("\n" + report)
-    return {}
+    precision = precision_score(true_labels, true_predictions)
+    recall = recall_score(true_labels, true_predictions)
+    f1 = f1_score(true_labels, true_predictions)
+
+    print("\n=== Classification Report ===")
+    print(classification_report(true_labels, true_predictions))
+
+    return {
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+    }
 
 # Training arguments
 training_args = TrainingArguments(
@@ -184,7 +194,8 @@ training_args = TrainingArguments(
     num_train_epochs=5,
     weight_decay=0.01,
     load_best_model_at_end=True,
-    metric_for_best_model="eval_loss",
+    metric_for_best_model="f1",
+    greater_is_better=True, 
     logging_dir="./logs",
     logging_steps=10,
     report_to="none",
@@ -205,6 +216,8 @@ trainer = Trainer(
 print("\nStarting training...")
 trainer.train()
 
+print("\nBest model metrics:")
+print(trainer.state.best_metric)
 # Evaluate on test set
 print("\nEvaluating on test set...")
 results = trainer.evaluate(test_tokenized)
@@ -252,3 +265,4 @@ sample_text = "Bill Clinton met with Donald Trump in Washington D.C. on January 
 predict_ner(sample_text, model, tokenizer, id2label)
 
 print("\nTraining complete!")
+

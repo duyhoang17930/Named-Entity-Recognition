@@ -1,0 +1,18 @@
+===== DATA STATISTICS =====
+
+Raw sentences: 3680
+Clean sentences: 3113
+Removed sentences: 567
+Average length: 15.76 words
+
+Top 10 frequent words:
+said: 744
+epstein: 324
+year: 295
+trump: 288
+would: 205
+last: 201
+also: 177
+reuters: 166
+new: 165
+monday: 157

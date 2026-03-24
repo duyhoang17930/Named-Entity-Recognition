@@ -42,7 +42,7 @@ class TextPreprocessor:
  
         text = re.sub(r'\S+@\S+', '', text)
  
-        text = re.sub(r'[^a-z0- 9\s]', ' ', text)
+        text = re.sub(r'[^a-z0-9\s]', ' ', text)
  
         text = re.sub(r'\s+', ' ', text).strip()
 
