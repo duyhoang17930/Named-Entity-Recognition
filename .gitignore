@@ -8,3 +8,5 @@ ner_model_final
 Day3_Encoding/.claude/settings.local.json
 myenv
 ner_model
+CK/bilstm_crf_improved.keras
+CK/bilstm_model.keras
