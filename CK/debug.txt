@@ -1,0 +1,57 @@
+0: markdown | # Named Entity Recognition (NER) Pipeline
+1: markdown | ---
+2: markdown | # Step 1: Data Crawling (Day1)
+3: code | import sys
+4: code | # CODE FROM Day1_Crawl/crawl.py
+5: markdown | ## Load Crawled Data
+6: code | # Load the crawled data (or use existing file)
+7: code | # Data Visualization: After Crawl
+8: code | # More exploration
+9: markdown | ---
+10: markdown | # Step 2: Text Preprocessing (Day2)
+11: code | import pandas as pd
+12: code | # Run preprocessing
+13: code | # Data Visualization: After Preprocessing
+14: markdown | ---
+15: markdown | # Step 3: NER Encoding (Day3)
+16: code | import sys
+17: code | import pandas as pd
+18: code | # Metrics
+19: code | # NER labeling process
+20: code | # Create vocabulary
+21: code | # Encode dataset
+22: code | # Save encoded dataset
+23: markdown | ---
+24: markdown | # Step 4: Auto-Labeling with custom mapping (Day4)
+25: code | {
+26: code | # Step 4: Relabeling with Custom Mappings (Day4)
+27: code | # Visualization: spaCy vs Custom Mapping Labels Comparison
+28: markdown | ---
+29: markdown | # Step 5: Model Training (Day5)
+30: code | import sys
+31: code | import ast
+32: code | # Step 4.5: Encode labels to numbers (0, 1, 2, ...)
+33: code | import json
+34: code | # Prepare data function
+35: code | # Convert to datasets
+36: code | # Tokenize datasets
+37: code | def compute_metrics(p):
+38: code | from transformers import DataCollatorForTokenClassification
+39: code | # Train model
+40: code | # Save model
+41: code | from transformers import AutoModelForTokenClassification, AutoTokenizer, Trainer, TrainingArguments
+42: markdown | ---
+43: markdown | # Step 6: Results & Visualization (Day6)
+44: code | import json
+45: code | # Analyze label distribution
+46: code | # Visualization - Label Distribution
+47: code | # Entity type summary (without B-/I- prefix)
+48: code | # Sentence length distribution
+49: markdown | ---
+50: markdown | # Step 7: Prediction (Inference)
+51: code | import torch
+52: code | # Fix: Load correct id2label from model config instead of label_mappings.json
+53: code | def predict_ner(text, show_details=True):
+54: code | # Test predictions
+55: markdown | ---
+56: markdown | # Summary & Conclusion
